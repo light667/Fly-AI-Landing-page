@@ -4,16 +4,27 @@
 //     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
-import { defineConfig } from "@tanstack/start/config";
-import tsconfigPaths from "vite-tsconfig-paths";
+// 1. Force l'injection des variables d'environnement pour Nitro/Vinxi avant tout chargement
+process.env.NITRO_PRESET = "vercel";
+process.env.SERVER_PRESET = "vercel";
 
-export default defineConfig({
-  server: {
-    preset: "vercel", // On indique explicitement à TanStack de build pour Vercel
-  },
-  vite: {
-    plugins: [
-      tsconfigPaths(), // Conserve le mapping des chemins (ex: @/components)
-    ],
+import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+
+const config = defineConfig({
+  tanstackStart: {
+    server: { 
+      entry: "server",
+      preset: "vercel"
+    },
   },
 });
+
+// 2. Mutation de l'objet pour écraser toute configuration Cloudflare résiduelle
+if (!config.server) config.server = {};
+config.server.preset = "vercel";
+
+if (!(config as any).tanstackStart) (config as any).tanstackStart = {};
+if (!(config as any).tanstackStart.server) (config as any).tanstackStart.server = {};
+(config as any).tanstackStart.server.preset = "vercel";
+
+export default config;
