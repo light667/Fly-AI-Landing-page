@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://flyai-org.web.app/sitemap.xml
+
