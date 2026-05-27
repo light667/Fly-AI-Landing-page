@@ -4,19 +4,16 @@
 //     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-import { nitro } from "nitro/vite";
+import { defineConfig } from "@tanstack/start/config";
+import tsconfigPaths from "vite-tsconfig-paths";
 
-// Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
 export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
+  server: {
+    preset: "vercel", // On indique explicitement à TanStack de build pour Vercel
   },
   vite: {
     plugins: [
-      nitro({
-        preset: "vercel", // Force Nitro à générer l'output attendu par Vercel
-      }),
+      tsconfigPaths(), // Conserve le mapping des chemins (ex: @/components)
     ],
   },
 });
