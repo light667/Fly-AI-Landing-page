@@ -54,7 +54,7 @@ export const Route = createFileRoute("/")({
 
 const FORMSPREE = "https://formspree.io/f/xkoeqaar";
 
-function Landing() {
+export function Landing() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Nav />
