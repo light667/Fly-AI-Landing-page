@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "robots", content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
       { name: "keywords", content: "bourses, étudiants africains, IA, scholarships, candidature, lettres de motivation, coaching, universités" },
       { name: "theme-color", content: "#0B1220" },
-      { name: "google-site-verification", content: "KH-iwi4DEGZF66JVRJCTTIjbailqFkO7t2eHV-NezTA" },
+      { name: "google-site-verification", content: "Wsdb0nWbYaxm9BnJ7YD2yMRN6N4fjyZPKfSAPhd9JIc" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Fly AI" },
       { property: "og:locale", content: "fr_FR" },
