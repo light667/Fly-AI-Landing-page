@@ -527,7 +527,7 @@ function Contact() {
             className="glass rounded-xl px-5 py-3 inline-flex items-center gap-2 text-sm hover:bg-muted/40 transition"
           >
             <Mail className="h-4 w-4 text-secondary shrink-0" />
-            nethaniahdjossou@gmail.com
+            Email
           </a>
           <a
             href={WHATSAPP_URL}
@@ -536,7 +536,7 @@ function Contact() {
             className="glass rounded-xl px-5 py-3 inline-flex items-center gap-2 text-sm hover:bg-muted/40 transition"
           >
             <MessageCircle className="h-4 w-4 text-secondary shrink-0" />
-            WhatsApp +228 70 70 31 11
+            WhatsApp
           </a>
           <a
             href="https://www.linkedin.com/company/flyai-org/"
