@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Sparkles,
@@ -14,45 +13,29 @@ import {
   Mail,
   Linkedin,
   Check,
+  Menu,
+  MessageCircle,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
-
-const APP_URL = "https://flyai-org.vercel.app";
-const SITE_URL = "https://flyai-org.web.app";
-
-export const Route = createFileRoute("/")({
-  component: Landing,
-  head: () => ({
-    meta: [
-      { title: "Fly AI — L'IA qui propulse les étudiants africains vers les bourses" },
-      {
-        name: "description",
-        content:
-          "Fly AI est la plateforme IA mobile-first qui aide les étudiants africains à trouver des bourses, améliorer leurs candidatures et décrocher leur avenir académique.",
-      },
-      { property: "og:title", content: "Fly AI — Propulsez votre avenir académique" },
-      {
-        property: "og:description",
-        content:
-          "Trouvez des bourses adaptées, améliorez votre dossier et candidatez plus vite grâce à l’IA pensée pour les étudiants africains.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: SITE_URL },
-      { property: "og:image", content: `${SITE_URL}${logo}` },
-      { property: "og:image:alt", content: "Fly AI" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Fly AI — Propulsez votre avenir académique" },
-      {
-        name: "twitter:description",
-        content: "Trouvez des bourses adaptées, améliorez votre dossier et candidatez plus vite grâce à l’IA.",
-      },
-      { name: "twitter:image", content: `${SITE_URL}${logo}` },
-    ],
-    links: [{ rel: "canonical", href: SITE_URL }],
-  }),
-});
+import { APP_URL, WHATSAPP_URL } from "@/lib/site";
+import { ThemeToggle } from "@/components/theme-toggle";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 
 const FORMSPREE = "https://formspree.io/f/xkoeqaar";
+
+const NAV_LINKS = [
+  { href: "#features", label: "Fonctionnalités" },
+  { href: "#how", label: "Comment ça marche" },
+  { href: "#why", label: "Pourquoi Fly AI" },
+  { href: "#contact", label: "Contact" },
+] as const;
 
 export function Landing() {
   return (
@@ -71,34 +54,79 @@ export function Landing() {
 }
 
 function Nav() {
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="fixed top-0 inset-x-0 z-50 px-4 pt-4">
-      <nav className="max-w-6xl mx-auto glass rounded-2xl px-5 py-3 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2.5">
+      <nav className="max-w-6xl mx-auto glass rounded-2xl px-4 sm:px-5 py-3 flex items-center justify-between gap-3">
+        <a href="#top" className="flex items-center gap-2.5 shrink-0">
           <img src={logo} alt="Fly AI" className="h-9 w-9 rounded-xl shadow-glow" />
           <span className="font-display font-bold text-lg">Fly AI</span>
         </a>
+
         <div className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
-          <a href="#features" className="hover:text-foreground transition">Fonctionnalités</a>
-          <a href="#how" className="hover:text-foreground transition">Comment ça marche</a>
-          <a href="#why" className="hover:text-foreground transition">Pourquoi Fly AI</a>
-          <a href="#contact" className="hover:text-foreground transition">Contact</a>
+          {NAV_LINKS.map((link) => (
+            <a key={link.href} href={link.href} className="hover:text-foreground transition">
+              {link.label}
+            </a>
+          ))}
         </div>
+
         <div className="flex items-center gap-2">
+          <ThemeToggle className="hidden sm:inline-flex" />
+
           <a
             href={APP_URL}
             target="_blank"
             rel="noreferrer"
-            className="gradient-primary text-primary-foreground text-sm font-semibold px-4 py-2 rounded-xl hover:opacity-90 transition shadow-glow"
+            className="gradient-primary text-primary-foreground text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl hover:opacity-90 transition shadow-glow whitespace-nowrap"
           >
             Commencer gratuitement
           </a>
-          <a
-            href="#contact"
-            className="hidden sm:inline-flex glass text-sm font-medium px-4 py-2 rounded-xl hover:bg-muted/50 transition"
-          >
-            Nous contacter
-          </a>
+
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <button
+                type="button"
+                className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-xl glass hover:bg-muted/40 transition"
+                aria-label="Ouvrir le menu"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[min(100vw-2rem,320px)]">
+              <SheetHeader>
+                <SheetTitle className="font-display text-left">Menu</SheetTitle>
+              </SheetHeader>
+              <nav className="mt-8 flex flex-col gap-1">
+                {NAV_LINKS.map((link) => (
+                  <SheetClose key={link.href} asChild>
+                    <a
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="rounded-xl px-4 py-3 text-sm font-medium hover:bg-muted/50 transition"
+                    >
+                      {link.label}
+                    </a>
+                  </SheetClose>
+                ))}
+              </nav>
+              <div className="mt-6 flex items-center justify-between px-1">
+                <span className="text-sm text-muted-foreground">Thème</span>
+                <ThemeToggle />
+              </div>
+              <SheetClose asChild>
+                <a
+                  href={APP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 w-full gradient-primary text-primary-foreground font-semibold px-4 py-3 rounded-xl hover:opacity-90 transition shadow-glow inline-flex items-center justify-center gap-2"
+                >
+                  Commencer gratuitement <ArrowRight className="h-4 w-4" />
+                </a>
+              </SheetClose>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
     </header>
@@ -114,38 +142,43 @@ function Hero() {
           <span>Plateforme IA pour les bourses académiques africaines</span>
         </div>
 
-        <h1 className="font-display text-5xl md:text-7xl font-bold leading-[1.05] mb-6 animate-fade-up" style={{ animationDelay: "0.1s" }}>
+        <h1
+          className="font-display text-5xl md:text-7xl font-bold leading-[1.05] mb-6 animate-fade-up"
+          style={{ animationDelay: "0.1s" }}
+        >
           Propulsez votre avenir <br />
           avec <span className="gradient-text">Fly AI</span>
         </h1>
 
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+        <p
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up"
+          style={{ animationDelay: "0.2s" }}
+        >
           L'intelligence artificielle qui aide les étudiants africains à trouver les bonnes bourses,
           construire des candidatures gagnantes et décrocher leur place dans les meilleures universités.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+        <div
+          className="flex justify-center mb-16 animate-fade-up"
+          style={{ animationDelay: "0.3s" }}
+        >
           <a
             href={APP_URL}
             target="_blank"
             rel="noreferrer"
-            className="gradient-primary text-primary-foreground font-semibold px-6 py-3.5 rounded-xl hover:opacity-90 transition shadow-glow inline-flex items-center justify-center gap-2"
+            className="gradient-primary text-primary-foreground font-semibold px-8 py-3.5 rounded-xl hover:opacity-90 transition shadow-glow inline-flex items-center justify-center gap-2"
           >
             Commencer gratuitement <ArrowRight className="h-4 w-4" />
-          </a>
-          <a
-            href={APP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="glass font-medium px-6 py-3.5 rounded-xl hover:bg-muted/50 transition"
-          >
-            Découvrir la plateforme
           </a>
         </div>
 
         <div className="relative mx-auto max-w-sm animate-float">
           <div className="absolute inset-0 gradient-primary blur-3xl opacity-40 rounded-full" />
-          <img src={logo} alt="Fly AI logo" className="relative w-48 h-48 mx-auto rounded-[2rem] animate-pulse-glow" />
+          <img
+            src={logo}
+            alt="Fly AI logo"
+            className="relative w-48 h-48 mx-auto rounded-[2rem] animate-pulse-glow"
+          />
         </div>
       </div>
     </section>
@@ -164,7 +197,9 @@ function Stats() {
       <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
         {stats.map((s) => (
           <div key={s.label} className="text-center">
-            <div className="font-display text-4xl md:text-5xl font-bold gradient-text mb-2">{s.value}</div>
+            <div className="font-display text-4xl md:text-5xl font-bold gradient-text mb-2">
+              {s.value}
+            </div>
             <div className="text-sm text-muted-foreground">{s.label}</div>
           </div>
         ))}
@@ -175,29 +210,59 @@ function Stats() {
 
 function Features() {
   const items = [
-    { icon: Target, title: "Bourses adaptées", desc: "Des recommandations personnalisées selon votre profil académique, vos langues et vos ambitions." },
-    { icon: Brain, title: "Score IA personnalisé", desc: "Évaluez la force de votre dossier et identifiez les axes d'amélioration en temps réel." },
-    { icon: FileText, title: "Lettres de motivation", desc: "Générez des lettres percutantes, adaptées à chaque bourse, en quelques secondes." },
-    { icon: TrendingUp, title: "Suivi des candidatures", desc: "Gardez le contrôle sur vos deadlines, statuts et prochaines étapes." },
-    { icon: Sparkles, title: "Assistant IA 24/7", desc: "Un coach intelligent qui répond à vos questions sur les bourses, visas et procédures." },
-    { icon: Smartphone, title: "Expérience premium", desc: "Une app pensée mobile-first, fluide, rapide, optimisée pour les connexions africaines." },
+    {
+      icon: Target,
+      title: "Bourses adaptées",
+      desc: "Des recommandations personnalisées selon votre profil académique, vos langues et vos ambitions.",
+    },
+    {
+      icon: Brain,
+      title: "Score IA personnalisé",
+      desc: "Évaluez la force de votre dossier et identifiez les axes d'amélioration en temps réel.",
+    },
+    {
+      icon: FileText,
+      title: "Lettres de motivation",
+      desc: "Générez des lettres percutantes, adaptées à chaque bourse, en quelques secondes.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Suivi des candidatures",
+      desc: "Gardez le contrôle sur vos deadlines, statuts et prochaines étapes.",
+    },
+    {
+      icon: Sparkles,
+      title: "Assistant IA 24/7",
+      desc: "Un coach intelligent qui répond à vos questions sur les bourses, visas et procédures.",
+    },
+    {
+      icon: Smartphone,
+      title: "Expérience premium",
+      desc: "Une app pensée mobile-first, fluide, rapide, optimisée pour les connexions africaines.",
+    },
   ];
   return (
     <section id="features" className="px-4 py-24">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">Fonctionnalités</div>
+          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">
+            Fonctionnalités
+          </div>
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
             Tout ce qu'il faut pour <span className="gradient-text">décrocher votre bourse</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Fly AI combine intelligence artificielle de pointe et expertise des bourses pour vous accompagner à chaque étape.
+            Fly AI combine intelligence artificielle de pointe et expertise des bourses pour vous
+            accompagner à chaque étape.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {items.map((it) => (
-            <div key={it.title} className="glass rounded-2xl p-6 shadow-card hover:-translate-y-1 transition duration-300 group">
+            <div
+              key={it.title}
+              className="glass rounded-2xl p-6 shadow-card hover:-translate-y-1 transition duration-300 group"
+            >
               <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center mb-5 group-hover:shadow-glow transition">
                 <it.icon className="h-6 w-6 text-primary-foreground" />
               </div>
@@ -213,16 +278,34 @@ function Features() {
 
 function HowItWorks() {
   const steps = [
-    { n: "01", title: "Créez votre profil", desc: "Renseignez votre parcours académique, vos langues et vos objectifs en quelques minutes." },
-    { n: "02", title: "Obtenez votre score IA", desc: "Notre intelligence artificielle analyse votre profil et révèle votre potentiel réel." },
-    { n: "03", title: "Recevez des bourses", desc: "Découvrez les opportunités les plus compatibles, classées par pertinence et urgence." },
-    { n: "04", title: "Candidatez avec l'IA", desc: "Générez vos lettres, suivez vos candidatures et décrochez votre place." },
+    {
+      n: "01",
+      title: "Créez votre profil",
+      desc: "Renseignez votre parcours académique, vos langues et vos objectifs en quelques minutes.",
+    },
+    {
+      n: "02",
+      title: "Obtenez votre score IA",
+      desc: "Notre intelligence artificielle analyse votre profil et révèle votre potentiel réel.",
+    },
+    {
+      n: "03",
+      title: "Recevez des bourses",
+      desc: "Découvrez les opportunités les plus compatibles, classées par pertinence et urgence.",
+    },
+    {
+      n: "04",
+      title: "Candidatez avec l'IA",
+      desc: "Générez vos lettres, suivez vos candidatures et décrochez votre place.",
+    },
   ];
   return (
     <section id="how" className="px-4 py-24 bg-card/30">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">Comment ça marche</div>
+          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">
+            Comment ça marche
+          </div>
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
             De votre profil à votre <span className="gradient-text">bourse rêvée</span>
           </h2>
@@ -244,24 +327,43 @@ function HowItWorks() {
 
 function Why() {
   const points = [
-    { icon: Globe, title: "Pensé pour l'Afrique", desc: "Optimisé pour les connexions lentes, conçu pour les étudiants du continent." },
-    { icon: Zap, title: "Rapide et fluide", desc: "Une expérience premium, sans friction, sur mobile comme sur desktop." },
-    { icon: Shield, title: "Données protégées", desc: "Vos informations restent confidentielles et sécurisées à chaque étape." },
+    {
+      icon: Globe,
+      title: "Pensé pour l'Afrique",
+      desc: "Optimisé pour les connexions lentes, conçu pour les étudiants du continent.",
+    },
+    {
+      icon: Zap,
+      title: "Rapide et fluide",
+      desc: "Une expérience premium, sans friction, sur mobile comme sur desktop.",
+    },
+    {
+      icon: Shield,
+      title: "Données protégées",
+      desc: "Vos informations restent confidentielles et sécurisées à chaque étape.",
+    },
   ];
   return (
     <section id="why" className="px-4 py-24">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
         <div>
-          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">Pourquoi Fly AI</div>
+          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">
+            Pourquoi Fly AI
+          </div>
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-            Une mission claire : <span className="gradient-text">démocratiser l'accès aux bourses</span>
+            Une mission claire :{" "}
+            <span className="gradient-text">démocratiser l'accès aux bourses</span>
           </h2>
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            Chaque année, des milliers d'étudiants africains brillants passent à côté de bourses faute d'information,
-            d'accompagnement ou d'outils adaptés. Fly AI change la donne.
+            Chaque année, des milliers d'étudiants africains brillants passent à côté de bourses faute
+            d'information, d'accompagnement ou d'outils adaptés. Fly AI change la donne.
           </p>
           <ul className="space-y-3">
-            {["Bourses internationales en un clic", "Coaching IA personnalisé", "Accompagnement de A à Z"].map((t) => (
+            {[
+              "Bourses internationales en un clic",
+              "Coaching IA personnalisé",
+              "Accompagnement de A à Z",
+            ].map((t) => (
               <li key={t} className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
                   <Check className="h-3.5 w-3.5 text-primary-foreground" />
@@ -304,7 +406,8 @@ function StartNow() {
                 Prêt à <span className="gradient-text">commencer gratuitement</span> ?
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Accédez à la plateforme web Fly AI, créez votre profil et commencez à recevoir des bourses adaptées dès aujourd’hui.
+                Accédez à la plateforme web Fly AI, créez votre profil et commencez à recevoir des
+                bourses adaptées dès aujourd’hui.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3 justify-start lg:justify-center">
@@ -356,7 +459,9 @@ function Contact() {
     <section id="contact" className="px-4 py-24 bg-hero-glow">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">Contact</div>
+          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">
+            Contact
+          </div>
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
             Travaillons <span className="gradient-text">ensemble</span>
           </h2>
@@ -368,40 +473,79 @@ function Contact() {
         <form onSubmit={onSubmit} className="glass rounded-3xl p-6 md:p-8 space-y-4 shadow-card">
           <div className="grid md:grid-cols-2 gap-4">
             <input
-              required name="name" placeholder="Votre nom" maxLength={100}
+              required
+              name="name"
+              placeholder="Votre nom"
+              maxLength={100}
               className="bg-input border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring transition"
             />
             <input
-              required type="email" name="email" placeholder="Votre email" maxLength={255}
+              required
+              type="email"
+              name="email"
+              placeholder="Votre email"
+              maxLength={255}
               className="bg-input border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring transition"
             />
           </div>
           <input
-            name="subject" placeholder="Sujet" maxLength={150}
+            name="subject"
+            placeholder="Sujet"
+            maxLength={150}
             className="w-full bg-input border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring transition"
           />
           <textarea
-            required name="message" placeholder="Votre message..." rows={5} maxLength={2000}
+            required
+            name="message"
+            placeholder="Votre message..."
+            rows={5}
+            maxLength={2000}
             className="w-full bg-input border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring transition resize-none"
           />
           <button
-            type="submit" disabled={status === "loading"}
+            type="submit"
+            disabled={status === "loading"}
             className="w-full gradient-primary text-primary-foreground font-medium px-6 py-3.5 rounded-xl hover:opacity-90 transition shadow-glow inline-flex items-center justify-center gap-2 disabled:opacity-60"
           >
-            {status === "loading" ? "Envoi..." : status === "sent" ? "Message envoyé ✓" : "Envoyer le message"}
+            {status === "loading"
+              ? "Envoi..."
+              : status === "sent"
+                ? "Message envoyé ✓"
+                : "Envoyer le message"}
             {status === "idle" && <ArrowRight className="h-4 w-4" />}
           </button>
           {status === "error" && (
-            <p className="text-sm text-destructive text-center">Erreur lors de l'envoi. Réessayez ou écrivez-nous directement.</p>
+            <p className="text-sm text-destructive text-center">
+              Erreur lors de l'envoi. Réessayez ou contactez-nous directement.
+            </p>
           )}
         </form>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-          <a href="mailto:nethaniahdjossou@gmail.com" className="glass rounded-xl px-5 py-3 inline-flex items-center gap-2 text-sm hover:bg-muted/40 transition">
-            <Mail className="h-4 w-4 text-secondary" /> nethaniahdjossou@gmail.com
+        <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center mt-8">
+          <a
+            href="mailto:nethaniahdjossou@gmail.com"
+            className="glass rounded-xl px-5 py-3 inline-flex items-center gap-2 text-sm hover:bg-muted/40 transition"
+          >
+            <Mail className="h-4 w-4 text-secondary shrink-0" />
+            nethaniahdjossou@gmail.com
           </a>
-          <a href="https://www.linkedin.com/company/flyai-org/" target="_blank" rel="noreferrer" className="glass rounded-xl px-5 py-3 inline-flex items-center gap-2 text-sm hover:bg-muted/40 transition">
-            <Linkedin className="h-4 w-4 text-secondary" /> LinkedIn Fly AI
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="glass rounded-xl px-5 py-3 inline-flex items-center gap-2 text-sm hover:bg-muted/40 transition"
+          >
+            <MessageCircle className="h-4 w-4 text-secondary shrink-0" />
+            WhatsApp +228 70 70 31 11
+          </a>
+          <a
+            href="https://www.linkedin.com/company/flyai-org/"
+            target="_blank"
+            rel="noreferrer"
+            className="glass rounded-xl px-5 py-3 inline-flex items-center gap-2 text-sm hover:bg-muted/40 transition"
+          >
+            <Linkedin className="h-4 w-4 text-secondary shrink-0" />
+            LinkedIn
           </a>
         </div>
       </div>
@@ -420,14 +564,34 @@ function Footer() {
             <div className="text-xs text-muted-foreground">Propulsez votre avenir académique</div>
           </div>
         </div>
-        <div className="text-xs text-muted-foreground">
+        <div className="text-xs text-muted-foreground text-center">
           © {new Date().getFullYear()} Fly AI. Tous droits réservés.
         </div>
         <div className="flex items-center gap-3">
-          <a href="mailto:nethaniahdjossou@gmail.com" className="w-9 h-9 rounded-lg glass flex items-center justify-center hover:bg-muted/40 transition">
+          <ThemeToggle />
+          <a
+            href="mailto:nethaniahdjossou@gmail.com"
+            className="w-9 h-9 rounded-lg glass flex items-center justify-center hover:bg-muted/40 transition"
+            aria-label="Email"
+          >
             <Mail className="h-4 w-4" />
           </a>
-          <a href="https://www.linkedin.com/company/flyai-org/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg glass flex items-center justify-center hover:bg-muted/40 transition">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="w-9 h-9 rounded-lg glass flex items-center justify-center hover:bg-muted/40 transition"
+            aria-label="WhatsApp"
+          >
+            <MessageCircle className="h-4 w-4" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/flyai-org/"
+            target="_blank"
+            rel="noreferrer"
+            className="w-9 h-9 rounded-lg glass flex items-center justify-center hover:bg-muted/40 transition"
+            aria-label="LinkedIn"
+          >
             <Linkedin className="h-4 w-4" />
           </a>
         </div>

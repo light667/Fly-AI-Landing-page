@@ -34,7 +34,7 @@
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
-:root {
+.dark {
   --radius: 1rem;
   --background: oklch(0.12 0.04 270);
   --foreground: oklch(0.98 0.005 250);
@@ -55,13 +55,45 @@
   --input: oklch(0.22 0.04 270);
   --ring: oklch(0.65 0.22 270);
   --gold: oklch(0.82 0.15 85);
-
+  --glass-bg: oklch(0.2 0.04 270 / 0.5);
+  --glass-border: oklch(0.6 0.15 270 / 0.15);
   --gradient-primary: linear-gradient(135deg, oklch(0.65 0.2 240), oklch(0.6 0.25 285));
   --gradient-hero: radial-gradient(ellipse at top, oklch(0.65 0.22 270 / 0.35), transparent 60%),
     radial-gradient(ellipse at bottom right, oklch(0.6 0.2 240 / 0.25), transparent 60%);
   --gradient-text: linear-gradient(135deg, oklch(0.85 0.12 240), oklch(0.75 0.2 285));
   --shadow-glow: 0 0 60px oklch(0.6 0.25 270 / 0.4);
   --shadow-card: 0 20px 60px -20px oklch(0.1 0.05 270 / 0.6);
+}
+
+.light {
+  --radius: 1rem;
+  --background: oklch(0.99 0.005 270);
+  --foreground: oklch(0.18 0.04 270);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.04 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.04 270);
+  --primary: oklch(0.55 0.22 270);
+  --primary-foreground: oklch(0.99 0.005 250);
+  --secondary: oklch(0.55 0.18 240);
+  --secondary-foreground: oklch(0.99 0.005 250);
+  --muted: oklch(0.95 0.01 270);
+  --muted-foreground: oklch(0.45 0.04 270);
+  --accent: oklch(0.55 0.18 240);
+  --accent-foreground: oklch(0.99 0.005 250);
+  --destructive: oklch(0.55 0.22 27);
+  --border: oklch(0.88 0.02 270);
+  --input: oklch(0.96 0.01 270);
+  --ring: oklch(0.55 0.22 270);
+  --gold: oklch(0.72 0.14 85);
+  --glass-bg: oklch(1 0 0 / 0.75);
+  --glass-border: oklch(0.75 0.08 270 / 0.35);
+  --gradient-primary: linear-gradient(135deg, oklch(0.55 0.2 240), oklch(0.5 0.24 285));
+  --gradient-hero: radial-gradient(ellipse at top, oklch(0.65 0.18 270 / 0.12), transparent 60%),
+    radial-gradient(ellipse at bottom right, oklch(0.6 0.16 240 / 0.1), transparent 60%);
+  --gradient-text: linear-gradient(135deg, oklch(0.5 0.2 240), oklch(0.45 0.24 285));
+  --shadow-glow: 0 0 40px oklch(0.55 0.2 270 / 0.2);
+  --shadow-card: 0 16px 48px -16px oklch(0.3 0.05 270 / 0.12);
 }
 
 @layer base {
@@ -103,9 +135,9 @@
     box-shadow: var(--shadow-card);
   }
   .glass {
-    background: oklch(0.2 0.04 270 / 0.5);
+    background: var(--glass-bg);
     backdrop-filter: blur(16px);
-    border: 1px solid oklch(0.6 0.15 270 / 0.15);
+    border: 1px solid var(--glass-border);
   }
 }
 
