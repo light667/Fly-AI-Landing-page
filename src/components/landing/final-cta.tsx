@@ -23,7 +23,7 @@ export function FinalCTA() {
                 onClick={() => trackCTA("final_rejoindre_beta")}
                 className="bg-white text-[#050A14] font-semibold px-8 py-3.5 rounded-xl hover:bg-white/90 transition inline-flex items-center justify-center gap-2"
               >
-                Rejoindre la bêta gratuite <ArrowRight className="h-4 w-4" />
+                Commencer gratuitement <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href="#features"

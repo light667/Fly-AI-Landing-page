@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Menu, ArrowRight } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { APP_URL } from "@/lib/site";
-import { trackCTA } from "@/lib/analytics";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Sheet,
@@ -16,8 +15,9 @@ import {
 const NAV_LINKS = [
   { href: "#features", label: "Fonctionnalités" },
   { href: "#how", label: "Comment ça marche" },
-  { href: "#roadmap", label: "Partenaires" },
-  { href: "#faq", label: "FAQ" },
+  { href: "#why", label: "Pourquoi Fly AI" },
+  { href: "#roadmap", label: "Roadmap" },
+  { href: "#contact", label: "Contact" },
 ] as const;
 
 export function Nav() {
@@ -31,7 +31,7 @@ export function Nav() {
           <span className="font-display font-bold text-lg">Fly AI</span>
         </a>
 
-        <div className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
+        <div className="hidden lg:flex items-center gap-5 text-sm text-muted-foreground">
           {NAV_LINKS.map((link) => (
             <a key={link.href} href={link.href} className="hover:text-foreground transition">
               {link.label}
@@ -41,21 +41,21 @@ export function Nav() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle className="hidden sm:inline-flex" />
+
           <a
             href={APP_URL}
             target="_blank"
             rel="noreferrer"
-            onClick={() => trackCTA("nav_rejoindre_beta")}
             className="gradient-primary text-primary-foreground text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl hover:opacity-90 transition shadow-glow whitespace-nowrap"
           >
-            Rejoindre la bêta
+            Commencer gratuitement
           </a>
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <button
                 type="button"
-                className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-xl glass hover:bg-muted/40 transition"
+                className="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-xl glass hover:bg-muted/40 transition"
                 aria-label="Ouvrir le menu"
               >
                 <Menu className="h-5 w-5" />
@@ -87,10 +87,9 @@ export function Nav() {
                   href={APP_URL}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => trackCTA("mobile_rejoindre_beta")}
                   className="mt-6 w-full gradient-primary text-primary-foreground font-semibold px-4 py-3 rounded-xl hover:opacity-90 transition shadow-glow inline-flex items-center justify-center gap-2"
                 >
-                  Rejoindre la bêta <ArrowRight className="h-4 w-4" />
+                  Commencer gratuitement <ArrowRight className="h-4 w-4" />
                 </a>
               </SheetClose>
             </SheetContent>

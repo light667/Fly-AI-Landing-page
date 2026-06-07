@@ -6,8 +6,10 @@ export function Roadmap() {
     <section id="roadmap" className="px-4 py-24">
       <div className="max-w-6xl mx-auto">
         <AnimateSection className="text-center mb-16">
-          <p className="text-sm text-accent font-medium mb-3 uppercase tracking-wider">Roadmap</p>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
+          <p className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">
+            Roadmap & Partenaires
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
             Ce qui arrive <span className="gradient-text">bientôt</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
