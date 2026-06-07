@@ -39,7 +39,9 @@ export function Pricing() {
                     Meilleure valeur
                   </span>
                 )}
-                <div className="text-2xl mb-2">{plan.emoji}</div>
+                <div className="text-2xl mb-2">
+                  <plan.icon className="h-8 w-8 text-primary mx-auto" />
+                </div>
                 <h3 className="font-display font-bold text-xl">{plan.name}</h3>
                 <div className="font-display text-3xl font-bold mt-2 mb-1">{plan.price}</div>
                 <p className="text-sm text-accent font-medium mb-1">{plan.credits}</p>

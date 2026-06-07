@@ -4,10 +4,9 @@ import { WHATSAPP_URL } from "@/lib/site";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const LINKS = [
-  { href: "#features", label: "À propos" },
-  { href: "#newsletter", label: "Contact" },
-  { href: "#", label: "Mentions légales" },
-  { href: "#", label: "Politique de confidentialité" },
+  { href: "/about", label: "À propos" },
+  { href: "/legal", label: "Mentions légales" },
+  { href: "/privacy", label: "Politique de confidentialité" },
 ] as const;
 
 export function Footer() {
@@ -21,7 +20,6 @@ export function Footer() {
               <div className="font-display font-bold text-lg">Fly AI</div>
               <div className="text-xs text-muted-foreground max-w-xs">
                 Find smarter. Apply better. Win bigger.
-                <span className="block mt-1">Application web & mobile multiplateforme.</span>
               </div>
             </div>
           </div>

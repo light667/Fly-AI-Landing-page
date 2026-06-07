@@ -11,6 +11,9 @@ import {
   LineChart,
   Bell,
   Wallet,
+  Gift,
+  Zap,
+  Rocket,
   type LucideIcon,
 } from "lucide-react";
 
@@ -123,7 +126,7 @@ export const ROADMAP: {
 export const PRICING_PLANS = [
   {
     name: "Démarrage",
-    emoji: "🎁",
+    icon: Gift,
     price: "Gratuit",
     credits: "50 crédits offerts à l'inscription",
     perCredit: null,
@@ -139,7 +142,7 @@ export const PRICING_PLANS = [
   },
   {
     name: "Pack Essentiel",
-    emoji: "⚡",
+    icon: Zap,
     price: "1 000 FCFA",
     credits: "100 crédits",
     perCredit: "10 FCFA / crédit",
@@ -155,7 +158,7 @@ export const PRICING_PLANS = [
   },
   {
     name: "Pack Avancé",
-    emoji: "🚀",
+    icon: Rocket,
     price: "1 500 FCFA",
     credits: "200 crédits",
     perCredit: "7,5 FCFA / crédit",

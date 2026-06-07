@@ -3,7 +3,6 @@ import { Hero } from "@/components/landing/hero";
 import { Features } from "@/components/landing/features";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { Roadmap } from "@/components/landing/roadmap";
-import { Newsletter } from "@/components/landing/newsletter";
 import { Pricing } from "@/components/landing/pricing";
 import { FAQ } from "@/components/landing/faq";
 import { FinalCTA } from "@/components/landing/final-cta";
@@ -17,7 +16,6 @@ export function Landing() {
       <Features />
       <HowItWorks />
       <Roadmap />
-      <Newsletter />
       <Pricing />
       <FAQ />
       <FinalCTA />
