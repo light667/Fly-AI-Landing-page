@@ -9,11 +9,11 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import logo from "@/assets/logo.png";
 import { useEffect } from "react";
 import { initFirebaseAnalytics } from "@/lib/firebase";
 
 const SITE_URL = "https://flyai-org.web.app";
+const logoPath = "/logo.png";
 
 function NotFoundComponent() {
   return (
@@ -90,18 +90,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Fly AI — L'IA qui propulse les étudiants africains" },
       { property: "og:description", content: "Plateforme IA mobile-first pour les bourses académiques des étudiants africains." },
       { property: "og:url", content: SITE_URL },
-      { property: "og:image", content: `${SITE_URL}${logo}` },
+      { property: "og:image", content: `${SITE_URL}${logoPath}` },
       { property: "og:image:alt", content: "Fly AI" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Fly AI — L'IA qui propulse les étudiants africains" },
       { name: "twitter:description", content: "Plateforme IA mobile-first pour les bourses académiques des étudiants africains." },
-      { name: "twitter:image", content: `${SITE_URL}${logo}` },
+      { name: "twitter:image", content: `${SITE_URL}${logoPath}` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "canonical", href: SITE_URL },
-      { rel: "icon", href: logo, type: "image/png" },
-      { rel: "apple-touch-icon", href: logo },
+      { rel: "icon", href: logoPath, type: "image/png" },
+      { rel: "apple-touch-icon", href: logoPath },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" },
