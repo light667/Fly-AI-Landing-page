@@ -13,6 +13,8 @@ await mkdir(out, { recursive: true });
 const sizes = [
   { name: "favicon-16x16.png", size: 16 },
   { name: "favicon-32x32.png", size: 32 },
+  { name: "favicon-48x48.png", size: 48 },
+  { name: "favicon-64x64.png", size: 64 },
   { name: "apple-touch-icon.png", size: 180 },
 ];
 
@@ -26,5 +28,7 @@ for (const { name, size } of sizes) {
 
 const png16 = await sharp(src).resize(16, 16, { fit: "cover" }).png().toBuffer();
 const png32 = await sharp(src).resize(32, 32, { fit: "cover" }).png().toBuffer();
-await writeFile(join(out, "favicon.ico"), await toIco([png16, png32]));
+const png48 = await sharp(src).resize(48, 48, { fit: "cover" }).png().toBuffer();
+const png64 = await sharp(src).resize(64, 64, { fit: "cover" }).png().toBuffer();
+await writeFile(join(out, "favicon.ico"), await toIco([png16, png32, png48, png64]));
 console.log("✓ favicon.ico");
