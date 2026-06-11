@@ -1,4 +1,31 @@
 import { ArrowRight, Users, BookOpen, Award } from "lucide-react";
+import { useState, useEffect } from "react";
+
+const BETA_DATE = new Date("2026-07-01T00:00:00Z");
+
+function getTimeLeft() {
+  const diff = BETA_DATE.getTime() - Date.now();
+  if (diff <= 0) return null;
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((diff % (1000 * 60)) / 1000),
+  };
+}
+
+function CountdownUnit({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="flex flex-col items-center">
+      <span className="font-display font-bold text-5xl sm:text-6xl md:text-7xl leading-none tabular-nums gradient-text">
+        {String(value).padStart(2, "0")}
+      </span>
+      <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-muted-foreground mt-2">
+        {label}
+      </span>
+    </div>
+  );
+}
 
 const STATS = [
   { value: "500+", label: "bourses indexées", icon: BookOpen },
@@ -7,6 +34,13 @@ const STATS = [
 ];
 
 export function Hero() {
+  const [timeLeft, setTimeLeft] = useState(getTimeLeft());
+
+  useEffect(() => {
+    const id = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background layers */}
@@ -29,16 +63,35 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center py-24">
-        {/* Eyebrow */}
+
+        {/* Eyebrow badge */}
         <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-8">
-          <span className="relative flex h-2 w-2">
+          <span className="relative flex h-2 w-2 shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
           </span>
           <span className="text-xs font-semibold text-primary tracking-wide uppercase">
-            Bêta — 1er juillet 2025
+            Sortie de la version bêta
           </span>
         </div>
+        {/* Big Countdown */}
+        {timeLeft ? (
+          <div className="mb-12">
+            <div className="flex items-start justify-center gap-4 sm:gap-8 md:gap-12">
+              <CountdownUnit value={timeLeft.days} label="Jours" />
+              <span className="font-display font-bold text-4xl sm:text-5xl md:text-6xl gradient-text leading-none mt-1 select-none">:</span>
+              <CountdownUnit value={timeLeft.hours} label="Heures" />
+              <span className="font-display font-bold text-4xl sm:text-5xl md:text-6xl gradient-text leading-none mt-1 select-none">:</span>
+              <CountdownUnit value={timeLeft.minutes} label="Minutes" />
+              <span className="font-display font-bold text-4xl sm:text-5xl md:text-6xl gradient-text leading-none mt-1 select-none">:</span>
+              <CountdownUnit value={timeLeft.seconds} label="Secondes" />
+            </div>
+          </div>
+        ) : (
+          <div className="mb-12">
+            <p className="font-display text-4xl font-bold gradient-text">🎉 La bêta est disponible !</p>
+          </div>
+        )}
 
         {/* Headline */}
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6">
@@ -48,10 +101,11 @@ export function Hero() {
         </h1>
 
         {/* Subheadline */}
-        <p className="mx-auto max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed mb-10">
+        <p className="mx-auto max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed mb-12">
           Trouvez les bourses qui vous correspondent, rédigez des candidatures percutantes
           et suivez vos dossiers — tout ça depuis une seule plateforme IA.
         </p>
+
 
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16">
