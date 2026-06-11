@@ -17,6 +17,7 @@ const NAV_LINKS = [
   { href: "#how", label: "Comment ça marche" },
   { href: "#why", label: "Pourquoi Fly AI" },
   { href: "#roadmap", label: "Roadmap" },
+  { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "Contact" },
 ] as const;
 

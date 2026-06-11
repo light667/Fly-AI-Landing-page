@@ -1,88 +1,145 @@
-import { Check, ArrowRight } from "lucide-react";
-import { APP_URL } from "@/lib/site";
-import { trackCTA } from "@/lib/analytics";
-import { AnimateSection } from "./animate-section";
-import { PRICING_PLANS } from "./data";
+import { Check, Sparkles } from "lucide-react";
+
+const PLANS = [
+  {
+    name: "Gratuit",
+    price: "0",
+    currency: "FCFA",
+    period: "pour toujours",
+    description: "Pour découvrir et commencer vos recherches.",
+    cta: "Commencer gratuitement",
+    ctaStyle: "border",
+    popular: false,
+    features: [
+      "Profil étudiant complet",
+      "20 bourses recommandées / mois",
+      "1 lettre de motivation / mois",
+      "Alertes deadline basiques",
+      "Tableau de bord candidatures",
+    ],
+  },
+  {
+    name: "Pro",
+    price: "1 000",
+    currency: "FCFA",
+    period: "/ mois",
+    description: "Pour les candidats sérieux qui veulent maximiser leurs chances.",
+    cta: "Commencer l'essai gratuit",
+    ctaStyle: "gradient",
+    popular: true,
+    features: [
+      "Tout du plan Gratuit",
+      "Bourses illimitées et matching avancé",
+      "Lettres de motivation illimitées",
+      "Essays & personal statements IA",
+      "Coaching IA personnalisé 24/7",
+      "Alertes premium et rappels",
+      "Revue de dossier complète",
+    ],
+  },
+  {
+    name: "Équipe",
+    price: "1 500",
+    currency: "FCFA",
+    period: "/ mois",
+    description: "Pour les établissements, ONG et conseillers d'orientation.",
+    cta: "Nous contacter",
+    ctaStyle: "border",
+    popular: false,
+    features: [
+      "Tout du plan Pro",
+      "Jusqu'à 10 étudiants / compte",
+      "Dashboard administrateur",
+      "Rapports et statistiques",
+      "Intégration établissements",
+      "Support prioritaire dédié",
+    ],
+  },
+];
 
 export function Pricing() {
   return (
-    <section id="pricing" className="px-4 py-24 bg-secondary/30">
-      <div className="max-w-6xl mx-auto">
-        <AnimateSection className="text-center mb-6">
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
-            Commencez gratuitement.{" "}
-            <span className="gradient-text">Évoluez à votre rythme.</span>
+    <section id="pricing" className="relative py-24 sm:py-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <div className="mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">
+            Tarifs
+          </p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground max-w-2xl">
+            Simple, transparent,
+            <span className="gradient-text"> abordable.</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Pas d&apos;abonnement forcé. Achetez des crédits uniquement quand vous en avez besoin.
+          <p className="mt-4 text-muted-foreground text-base max-w-md">
+            Commencez gratuitement. Passez au Pro quand vous êtes prêt à candidater sérieusement.
           </p>
-        </AnimateSection>
+        </div>
 
-        <AnimateSection delay={80} className="max-w-3xl mx-auto text-center mb-12">
-          <p className="text-sm text-muted-foreground leading-relaxed glass rounded-xl px-5 py-4">
-            Fly AI fonctionne avec un système de <strong className="text-foreground">crédits</strong>.
-            Chaque action IA (analyse, rédaction, session Light…) consomme des crédits. Vous gardez le
-            contrôle total de votre consommation.
-          </p>
-        </AnimateSection>
+        {/* Plans grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 items-start">
+          {PLANS.map((plan) => (
+            <div
+              key={plan.name}
+              className={`relative rounded-2xl border p-6 flex flex-col transition-all duration-200 ${
+                plan.popular
+                  ? "border-primary/40 bg-gradient-to-b from-primary/5 to-card shadow-[0_0_40px_rgba(59,127,255,0.12)]"
+                  : "border-border bg-card hover:border-border/80"
+              }`}
+            >
+              {/* Popular badge */}
+              {plan.popular && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                  <span className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider bg-primary text-primary-foreground shadow-glow">
+                    <Sparkles className="h-2.5 w-2.5" />
+                    Populaire
+                  </span>
+                </div>
+              )}
 
-        <div className="grid md:grid-cols-3 gap-5 mb-10">
-          {PRICING_PLANS.map((plan, i) => (
-            <AnimateSection key={plan.name} delay={i * 100}>
-              <div
-                className={`glass rounded-2xl p-6 h-full flex flex-col relative ${
-                  plan.highlight ? "border-glow-strong shadow-glow ring-1 ring-accent/30" : ""
+              {/* Plan info */}
+              <div className="mb-6">
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                  {plan.name}
+                </div>
+                <div className="flex items-baseline gap-1.5 mb-2 flex-wrap">
+                  <span className="font-display text-4xl font-bold text-foreground">{plan.price}</span>
+                  <span className="text-sm font-semibold text-primary">{plan.currency}</span>
+                  <span className="text-sm text-muted-foreground">{plan.period}</span>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{plan.description}</p>
+              </div>
+
+              {/* CTA */}
+              <a
+                href="#newsletter"
+                className={`flex items-center justify-center h-10 rounded-xl text-sm font-semibold transition-all mb-6 ${
+                  plan.ctaStyle === "gradient"
+                    ? "gradient-cta text-white shadow-glow hover:shadow-glow-strong hover:scale-[1.01]"
+                    : "border border-border text-foreground hover:bg-white/5"
                 }`}
               >
-                {plan.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full gradient-primary text-primary-foreground">
-                    Meilleure valeur
-                  </span>
-                )}
-                <div className="text-2xl mb-2">
-                  <plan.icon className="h-8 w-8 text-primary mx-auto" />
-                </div>
-                <h3 className="font-display font-bold text-xl">{plan.name}</h3>
-                <div className="font-display text-3xl font-bold mt-2 mb-1">{plan.price}</div>
-                <p className="text-sm text-accent font-medium mb-1">{plan.credits}</p>
-                {plan.perCredit && (
-                  <p className="text-xs text-muted-foreground mb-4">{plan.perCredit}</p>
-                )}
-                {!plan.perCredit && <div className="mb-4" />}
-                <ul className="space-y-2 flex-1 mb-6">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm">
-                      <Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={APP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => trackCTA(`pricing_${plan.name}`)}
-                  className={`w-full text-center font-semibold px-4 py-3 rounded-xl transition inline-flex items-center justify-center gap-2 ${
-                    plan.highlight || plan.ctaPrimary
-                      ? "gradient-primary text-primary-foreground shadow-glow hover:opacity-90"
-                      : "glass hover:bg-muted/50"
-                  }`}
-                >
-                  {plan.cta} <ArrowRight className="h-4 w-4" />
-                </a>
-              </div>
-            </AnimateSection>
+                {plan.cta}
+              </a>
+
+              {/* Features */}
+              <ul className="space-y-2.5">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5">
+                    <div className="mt-0.5 h-4 w-4 flex-shrink-0 rounded-full bg-accent/15 flex items-center justify-center">
+                      <Check className="h-2.5 w-2.5 text-accent" />
+                    </div>
+                    <span className="text-sm text-muted-foreground">{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
 
-        <AnimateSection delay={120} className="text-center space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Les crédits n&apos;expirent pas. Achetez une fois, utilisez quand vous voulez.
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Paiement sécurisé via Mobile Money (Wave, Orange Money, MTN MoMo)
-          </p>
-        </AnimateSection>
+        {/* Bottom note */}
+        <p className="text-center text-xs text-muted-foreground mt-8">
+          Prix en bêta. Offre early-bird pour les premiers inscrits — réservez votre place maintenant.
+        </p>
       </div>
     </section>
   );

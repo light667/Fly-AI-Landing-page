@@ -1,75 +1,100 @@
-import {
-  Brain,
-  Target,
-  FileText,
-  TrendingUp,
-  Sparkles,
-  Smartphone,
-} from "lucide-react";
+import { Search, FileText, Bell, BarChart3, MessageSquare, Zap } from "lucide-react";
 
 const FEATURES = [
   {
-    icon: Target,
-    title: "Bourses adaptées",
-    desc: "Des recommandations personnalisées selon votre profil académique, vos langues et vos ambitions.",
-  },
-  {
-    icon: Brain,
-    title: "Score IA personnalisé",
-    desc: "Évaluez la force de votre dossier et identifiez les axes d'amélioration en temps réel.",
+    icon: Search,
+    title: "Matching IA de bourses",
+    description:
+      "Notre algorithme analyse votre profil académique et vous propose les bourses avec les meilleures chances de succès — parmi plus de 500 programmes internationaux.",
+    accent: "primary",
   },
   {
     icon: FileText,
-    title: "Lettres de motivation",
-    desc: "Générez des lettres percutantes, adaptées à chaque bourse, en quelques secondes.",
+    title: "Rédaction assistée",
+    description:
+      "Générez des lettres de motivation, essays et personal statements percutants. L'IA adapte le ton et le contenu à chaque programme et université.",
+    accent: "accent",
   },
   {
-    icon: TrendingUp,
-    title: "Suivi des candidatures",
-    desc: "Gardez le contrôle sur vos deadlines, statuts et prochaines étapes.",
+    icon: Bell,
+    title: "Alertes personnalisées",
+    description:
+      "Ne ratez plus aucune deadline. Recevez des notifications ciblées sur les nouvelles bourses correspondant à votre profil et les dates limites importantes.",
+    accent: "primary",
   },
   {
-    icon: Sparkles,
-    title: "Assistant IA 24/7",
-    desc: "Un coach intelligent qui répond à vos questions sur les bourses, visas et procédures.",
+    icon: BarChart3,
+    title: "Tableau de bord complet",
+    description:
+      "Suivez l'avancement de chaque candidature en temps réel. Visualisez vos statistiques, vos points forts et les axes d'amélioration de votre dossier.",
+    accent: "accent",
   },
   {
-    icon: Smartphone,
-    title: "Expérience premium",
-    desc: "Une app pensée mobile-first, fluide, rapide, optimisée pour les connexions africaines.",
+    icon: MessageSquare,
+    title: "Coaching IA 24/7",
+    description:
+      "Posez vos questions à tout moment. L'assistant IA vous guide sur les exigences de chaque bourse, la rédaction, les entretiens et les démarches administratives.",
+    accent: "primary",
   },
-] as const;
+  {
+    icon: Zap,
+    title: "Candidature rapide",
+    description:
+      "Pré-remplissez automatiquement vos formulaires grâce à votre profil centralisé. Ce qui prenait des heures ne prend plus que quelques minutes.",
+    accent: "accent",
+  },
+];
 
 export function Features() {
   return (
-    <section id="features" className="px-4 py-24">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="text-sm text-secondary font-medium mb-3 uppercase tracking-wider">
+    <section id="features" className="relative py-24 sm:py-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Section header */}
+        <div className="mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">
             Fonctionnalités
-          </div>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
-            Tout ce qu'il faut pour <span className="gradient-text">décrocher votre bourse</span>
+          </p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground max-w-2xl">
+            Tout ce dont vous avez besoin
+            <span className="gradient-text"> pour décrocher votre bourse.</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Fly AI combine intelligence artificielle de pointe et expertise des bourses pour vous
-            accompagner à chaque étape.
+          <p className="mt-4 text-muted-foreground max-w-xl text-base leading-relaxed">
+            Une plateforme unique qui remplace des heures de recherche, de rédaction et de suivi
+            par une expérience fluide et intelligente.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {FEATURES.map((item) => (
-            <div
-              key={item.title}
-              className="glass rounded-2xl p-6 shadow-card hover:-translate-y-1 transition duration-300 group"
-            >
-              <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center mb-5 group-hover:shadow-glow transition">
-                <item.icon className="h-6 w-6 text-primary-foreground" />
+        {/* Feature grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {FEATURES.map((feature) => {
+            const Icon = feature.icon;
+            const isAccent = feature.accent === "accent";
+            return (
+              <div
+                key={feature.title}
+                className="group relative rounded-2xl border border-border bg-card p-6 hover:border-primary/25 transition-all duration-200 hover:shadow-card border-glow-hover"
+              >
+                {/* Icon */}
+                <div
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-xl mb-4 ${
+                    isAccent
+                      ? "bg-accent/10 text-accent"
+                      : "bg-primary/10 text-primary"
+                  }`}
+                >
+                  <Icon className="h-5 w-5" />
+                </div>
+
+                {/* Content */}
+                <h3 className="font-display font-semibold text-base text-foreground mb-2 leading-snug">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="font-display font-semibold text-xl mb-2">{item.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
