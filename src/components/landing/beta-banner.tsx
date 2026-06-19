@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, Rocket } from "lucide-react";
 
-const BETA_DATE = new Date("2025-07-01T00:00:00Z");
+const BETA_DATE = new Date("2026-07-11T00:00:00Z");
 
 function getTimeLeft() {
   const now = new Date();
