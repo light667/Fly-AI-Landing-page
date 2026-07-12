@@ -7,7 +7,7 @@ export const SITE_DESCRIPTION =
 export const SITE_TAGLINE = "Find smarter. Apply better. Win bigger.";
 
 export const KEYWORDS =
-  "bourses étudiants africains, scholarships Africa, IA bourses, lettre de motivation, candidature université, Fly AI, bourse internationale, coaching académique";
+  "bourses étudiants africains, scholarships Africa, IA bourses, lettre de motivation, candidature université, Fly AI, bourse internationale, coaching académique, FlyAI, OpenCampus, Scholarship, DJOSSOU Light, Freeman SEGUE, DOH Ben";
 
 export const OG_IMAGE = `${SITE_URL}/logo.png`;
 
