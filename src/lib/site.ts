@@ -1,4 +1,4 @@
-export const APP_URL = "https://flyai-org.web.app/";
+export const APP_URL = "";
 export const SITE_URL = "https://fly-ai-page.vercel.app";
 
 export const SITE_TITLE = "Fly AI — Propulsez votre avenir académique";
