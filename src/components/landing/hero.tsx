@@ -1,7 +1,7 @@
 import { ArrowRight, Users, BookOpen, Award } from "lucide-react";
 import { useState, useEffect } from "react";
 
-const BETA_DATE = new Date("2026-07-21T00:00:00Z");
+const BETA_DATE = new Date("2026-08-01T00:00:00Z");
 
 function getTimeLeft() {
   const diff = BETA_DATE.getTime() - Date.now();
